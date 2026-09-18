@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ani</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blush-1: #ffe3e8;
+    --blush-2: #ffd0d9;
+    --cream: #fff8f2;
+    --fur: #c08a5c;
+    --fur-dark: #9c6b3f;
+    --muzzle: #f3dcb8;
+    --heart: #e2536b;
+    --heart-dark: #c23a52;
+    --ink: #5b3a2e;
+    --ink-soft: #8a6a5c;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    height: 100%;
+    font-family: 'Nunito', sans-serif;
+    color: var(--ink);
+  }
+
+  body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(120% 120% at 50% 0%, var(--blush-1) 0%, var(--blush-2) 60%, #ffc4d1 100%);
+    overflow-x: hidden;
+    padding: 32px 16px;
+  }
+
+  .stage{
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .teddy-wrap{
+    position: relative;
+    width: min(320px, 78vw);
+    filter: drop-shadow(0 18px 30px rgba(120, 70, 50, 0.25));
+  }
+
+  .teddy-wrap svg{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .heart-btn{
+    cursor: pointer;
+    transform-origin: center;
+    animation: pulse 2.4s ease-in-out infinite;
+    transition: transform 0.15s ease;
+  }
+  .heart-btn:hover{ transform: scale(1.08); }
+  .heart-btn:active{ transform: scale(0.95); }
+  .heart-btn:focus{ outline: none; }
+  .heart-btn:focus-visible circle.hit{
+    stroke: #fff;
+    stroke-width: 3;
+    stroke-dasharray: 4 4;
+  }
+
+  @keyframes pulse{
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+
+  .hint{
+    margin-top: 22px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--ink);
+    letter-spacing: 0.2px;
+  }
+
+  .hint .arrow{
+    display: inline-block;
+    margin-left: 6px;
+    animation: bob 1.6s ease-in-out infinite;
+  }
+
+  @keyframes bob{
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  .name{
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--heart-dark);
+    margin-bottom: 4px;
+  }
+
+  /* Overlay + card */
+  .overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(91, 58, 46, 0.35);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    z-index: 10;
+  }
+  .overlay.show{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .card{
+    background: var(--cream);
+    border-radius: 28px;
+    max-width: 460px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 30px 26px 26px;
+    box-shadow: 0 24px 60px rgba(120, 70, 50, 0.35);
+    transform: translateY(24px) scale(0.96);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(.2,.9,.3,1.2), opacity 0.35s ease;
+    position: relative;
+  }
+  .overlay.show .card{
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  .card-heart{
+    width: 46px;
+    margin: 0 auto 14px;
+    display: block;
+  }
+
+  .card h2{
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--heart-dark);
+    margin: 0 0 14px;
+    text-align: center;
+  }
+
+  .card p{
+    font-size: 1.02rem;
+    line-height: 1.65;
+    margin: 0 0 14px;
+    text-align: left;
+  }
+
+  .card .signoff{
+    text-align: center;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-top: 18px;
+    margin-bottom: 0;
+  }
+
+  .close-btn{
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1;
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 4px;
+  }
+  .close-btn:hover{ color: var(--heart-dark); }
+
+  @media (prefers-reduced-motion: reduce){
+    .heart-btn, .hint .arrow{ animation: none; }
+    .card, .overlay{ transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="stage">
+    <div class="teddy-wrap">
+      <svg viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Teddy bear holding a heart">
+        <!-- ears -->
+        <circle cx="92" cy="70" r="38" fill="var(--fur)"/>
+        <circle cx="248" cy="70" r="38" fill="var(--fur)"/>
+        <circle cx="92" cy="70" r="18" fill="var(--muzzle)"/>
+        <circle cx="248" cy="70" r="18" fill="var(--muzzle)"/>
+
+        <!-- body -->
+        <ellipse cx="170" cy="290" rx="112" ry="86" fill="var(--fur)"/>
+
+        <!-- arms hugging heart -->
+        <path d="M76 250 Q40 260 55 315 Q75 355 130 340 Q100 320 96 285 Q92 260 76 250 Z" fill="var(--fur)"/>
+        <path d="M264 250 Q300 260 285 315 Q265 355 210 340 Q240 320 244 285 Q248 260 264 250 Z" fill="var(--fur)"/>
+
+        <!-- head -->
+        <circle cx="170" cy="150" r="98" fill="var(--fur)"/>
+
+        <!-- muzzle -->
+        <ellipse cx="170" cy="178" rx="52" ry="40" fill="var(--muzzle)"/>
+
+        <!-- eyes -->
+        <circle cx="138" cy="140" r="8" fill="var(--ink)"/>
+        <circle cx="202" cy="140" r="8" fill="var(--ink)"/>
+        <circle cx="140.5" cy="137.5" r="2.4" fill="#fff"/>
+        <circle cx="204.5" cy="137.5" r="2.4" fill="#fff"/>
+
+        <!-- nose + mouth -->
+        <ellipse cx="170" cy="168" rx="11" ry="8" fill="var(--fur-dark)"/>
+        <path d="M170 176 L170 186" stroke="var(--fur-dark)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M170 186 Q152 202 138 190" stroke="var(--fur-dark)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M170 186 Q188 202 202 190" stroke="var(--fur-dark)" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+        <!-- cheeks -->
+        <ellipse cx="118" cy="172" rx="12" ry="8" fill="#ffb9c4" opacity="0.55"/>
+        <ellipse cx="222" cy="172" rx="12" ry="8" fill="#ffb9c4" opacity="0.55"/>
+
+        <!-- belly patch -->
+        <ellipse cx="170" cy="300" rx="62" ry="50" fill="var(--muzzle)" opacity="0.9"/>
+
+        <!-- paws in front -->
+        <circle cx="128" cy="322" r="22" fill="var(--fur)"/>
+        <circle cx="212" cy="322" r="22" fill="var(--fur)"/>
+
+        <!-- HEART (interactive) -->
+        <g class="heart-btn" tabindex="0" role="button" aria-label="Click the heart to read the message" id="heartBtn">
+          <circle class="hit" cx="170" cy="300" r="46" fill="transparent"/>
+          <path d="M170 322
+                   C 150 300, 120 292, 120 268
+                   C 120 250, 136 238, 152 244
+                   C 160 247, 166 254, 170 260
+                   C 174 254, 180 247, 188 244
+                   C 204 238, 220 250, 220 268
+                   C 220 292, 190 300, 170 322 Z"
+                fill="var(--heart)" stroke="var(--heart-dark)" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <p class="hint">Click on the heart to know more<span class="arrow">🡒</span></p>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="cardTitle">
+      <button class="close-btn" id="closeBtn" aria-label="Close">✕</button>
+      <svg class="card-heart" viewBox="0 0 60 54" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 50 C6 34, -2 18, 10 8 C18 1, 27 4, 30 12 C33 4, 42 1, 50 8 C62 18, 54 34, 30 50 Z" fill="var(--heart)"/>
+      </svg>
+      <h2 id="cardTitle">To Ani ji</h2>
+      <p>I'm sorry, Ani ji, for making you sad or mad over anything. I know you're tired, but your texts made it seem like I did something that disappointed you.</p>
+      <p>If something's bothering you, please tell me. Share it with me, and I'll help make it right.</p>
+      <p>You know I love you so much, and I've missed you since morning. I'm sorry again.</p>
+      <p>If you're really not mad and everything's fine, just text me "I love you." And if you are upset, tell me what's wrong.</p>
+      <p class="signoff">I'm waiting for your reply. 🤎</p>
+    </div>
+  </div>
+
+<script>
+  const heartBtn = document.getElementById('heartBtn');
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('closeBtn');
+
+  function openCard(){
+    overlay.classList.add('show');
+  }
+  function closeCard(){
+    overlay.classList.remove('show');
+  }
+
+  heartBtn.addEventListener('click', openCard);
+  heartBtn.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      openCard();
+    }
+  });
+
+  closeBtn.addEventListener('click', closeCard);
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) closeCard();
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') closeCard();
+  });
+</script>
+
+</body>
+</html>
